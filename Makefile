@@ -17,12 +17,10 @@
 #
 
 # DEBUG=-DDEBUG
-TCLVERSION=8.3
-TCLINCLUDE=-I/usr/include/tcl$(TCLVERSION)
 CFLAGS=-g -Wall
 
 
-all:	megahal tcllib pythonmodule perlmodule
+all:	megahal pythonmodule perlmodule
 
 megahal: main.o megahal.o megahal.h backup
 	gcc $(CFLAGS) -o megahal megahal.o main.o -lm $(DEBUG)
@@ -33,12 +31,6 @@ megahal.o: megahal.c megahal.h
 
 main.o: main.c megahal.h
 	gcc $(CFLAGS) -c main.c
-
-tcl-interface.o: tcl-interface.c
-	gcc -fPIC $(CFLAGS) $(TCLINCLUDE) -c tcl-interface.c
-
-tcllib: megahal.o tcl-interface.o
-	gcc -fPIC -shared -Wl,-soname,libmh_tcl.so -o libmh_tcl.so megahal.o tcl-interface.o
 
 pythonmodule: python-interface.c megahal.c
 	python setup.py build
