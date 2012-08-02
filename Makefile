@@ -20,7 +20,7 @@
 CFLAGS=-g -Wall
 
 
-all:	megahal pythonmodule perlmodule
+all:	megahal pythonmodule
 
 megahal: main.o megahal.o megahal.h backup
 	gcc $(CFLAGS) -o megahal megahal.o main.o -lm $(DEBUG)
@@ -38,12 +38,6 @@ pythonmodule: python-interface.c megahal.c
 pythonmodule-install:
 	python setup.py install --root=$(DESTDIR)
 
-perlmodule: megahal.c megahal.h
-	cd Megahal && perl Makefile.PL INSTALLDIRS=vendor && make
-
-perlmodule-install:
-	cd Megahal && make install DESTDIR=$(DESTDIR)
-
 version:
 	./cvsversion.tcl
 
@@ -53,9 +47,6 @@ dist: clean version
 clean:
 	rm -f megahal
 	rm -rf build
-	if [ -f Megahal/Makefile ]; then \
-	  cd Megahal ; make clean; \
-	fi
 	rm -f megahal.brn megahal.log megahal.txt
 	if [ -e megahal.dic.backup ];then\
 		cp megahal.dic.backup megahal.dic;\
@@ -72,6 +63,8 @@ backup:
 
 #
 #	$Log: Makefile,v $
+#   Revision history now in Git
+#
 #	Revision 1.8  2004/01/13 10:59:20  lfousse
 #	* Applied code cleaning already shipped with the debian package.
 #	* Removed pure debian stuff.
