@@ -2,7 +2,7 @@
 
 from distutils.core import setup, Extension
 
-pymegahal = Extension("mh_python", ["python-interface.c", "megahal.c"])
+pymegahal = Extension("megahal", ["python-interface.c", "megahal.c"])
 
 longdesc = """MegaHAL is a conversation simulator that can learn as
 you talk to it. This module contains Python bindings for the library."""

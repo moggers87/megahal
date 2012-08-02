@@ -6,6 +6,11 @@
 
 static PyObject *mhinitbrain(PyObject *self, PyObject *args)
 {
+    char *input;
+
+    if (PyArg_ParseTuple(args, "s", &input))
+    megahal_setdirectory(input);
+
     megahal_initialize();
     return Py_None;
 }
@@ -49,10 +54,10 @@ static struct PyMethodDef mh_methods[] = {
     {NULL, NULL, 0, NULL} /* Sentinel */
 };
 
-void initmh_python()
+void initmegahal()
 {
-    Py_InitModule("mh_python", mh_methods);
+    Py_InitModule("megahal", mh_methods);
 
     if(PyErr_Occurred())
-	Py_FatalError("can't initialize module my_python");
+	Py_FatalError("can't initialize module megahal");
 }
