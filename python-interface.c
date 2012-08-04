@@ -63,7 +63,7 @@ static PyObject *mhsetdirectory(PyObject *self, PyObject *args)
  * Main functions
  */
 
-static PyObject *mhinitalize(PyObject *self, PyObject *args)
+static PyObject *mhinitialize(PyObject *self, PyObject *args)
 {
     megahal_initialize();
     return Py_BuildValue("");
@@ -83,12 +83,12 @@ static PyObject *mhcommand(PyObject *self, PyObject *args)
     char *input;
     int *output = NULL;
 
-    if (!PyArg_ParrseTuple(args, "s", &input))
+    if (!PyArg_ParseTuple(args, "s", &input))
     return NULL;
 
-    output = megahal_command(input)
+    output = megahal_command(input);
 
-    return PyInt_FromLong(output)
+    return PyInt_FromLong(output);
 }
 
 static PyObject *mhdoreply(PyObject *self, PyObject *args)
@@ -124,14 +124,14 @@ static PyObject *mhcleanup(PyObject *self, PyObject *args)
 
 static struct PyMethodDef mh_methods[] = {
     {"setnoprompt", mhsetnoprompt, METH_VARARGS, "Turn off prompt"},
-    {"setnowrap", mhsetnowrap, METH_VARARGS, "Turn off text wrap"}
-    {"setnobanner", mhsetnobanner, METH_VARARGS, "Turn off banner"}
-    {"seterrorfile", mhsetterrorfile, METH_VARARGS, "Set filename of error file"}
-    {"setstatusfile", mhsetstatusfile, METH_VARARGS, "Set filename of status file"}
-    {"setdirectory", mhsetdirectory, METH_VARARGS, "Set directory for files"}
-    {"initalize", mhinitalize, METH_VARARGS, "Initialize megahal brain"},
-    {"initialgreeting", mhinitialgreeting, METH_VARARGS, "Return initial greeting"}
-    {"command", mhcommand, METH_VARARGS, "Give Megahal a command"}
+    {"setnowrap", mhsetnowrap, METH_VARARGS, "Turn off text wrap"},
+    {"setnobanner", mhsetnobanner, METH_VARARGS, "Turn off banner"},
+    {"seterrorfile", mhseterrorfile, METH_VARARGS, "Set filename of error file"},
+    {"setstatusfile", mhsetstatusfile, METH_VARARGS, "Set filename of status file"},
+    {"setdirectory", mhsetdirectory, METH_VARARGS, "Set directory for files"},
+    {"initialize", mhinitialize, METH_VARARGS, "Initialize megahal brain"},
+    {"initialgreeting", mhinitialgreeting, METH_VARARGS, "Return initial greeting"},
+    {"command", mhcommand, METH_VARARGS, "Give Megahal a command"},
     {"doreply", mhdoreply, METH_VARARGS, "Generate a reply"},
     {"cleanup", mhcleanup, METH_VARARGS,"Clean megahal"},
     {"learn", mhlearn, METH_VARARGS, "Learn from a sentence, don't generate a reply"},
