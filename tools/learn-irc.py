@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 """A Simple script to learn from a chatlog in the irssi log format
 """
-
-
+import argparse
 import megahal as mh
 
-mh.initalize()
+parser = argparse.ArgumentParser(description='A Simple script to learn from a chatlog in the irssi log format')
+parser.add_argument('irclog', type=str, help='Log to be processed')
+file = parser.parse_args().irclog
 
-file = 'tdtrs.log'
+mh.initialize()
 
 with open(file) as log:
     for line in log:
